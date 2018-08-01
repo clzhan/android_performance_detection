@@ -11,7 +11,20 @@ import time
 import threading
 
 import re
+import signal
 
+
+isquit = False
+
+
+def exit(signum, frame):
+    print('You choose to stop me.')
+    global  isquit
+    isquit = True
+
+
+signal.signal(signal.SIGINT, exit)
+signal.signal(signal.SIGTERM, exit)
 
 class Controller(object):
 
@@ -76,6 +89,11 @@ class Controller(object):
             writer.writerows(self.allData)
             self.allData.pop()
             self.allData = []
+
+            if isquit:
+                break
+
+            print(isquit)
 
             time.sleep(1)
 
