@@ -30,8 +30,8 @@ class Controller(object):
 
     def __init__(self):
         #self.counter = count
-        #保存数据到列表 时间、虚拟内存、物理内存、名
-        self.allData = [("timestamp", "VSS", "RSS", "CPU","User","System","name")]
+        #保存数据到列表 时间、虚拟内存、物理内存、本进程的CPU、用户CPU、系统CPU、名
+        self.allData = [("timestamp", "VSS K", "RSS K", "CPU %","User %","System %","name")]
         #self.second = ''
         self.totalTime = ''
         self.system = ''
@@ -73,9 +73,11 @@ class Controller(object):
                         #print 'Exist'
                         print(line)
                         data_list = line.split()
-                        self.CPU = data_list[2]
-                        self.vss = data_list[5]
-                        self.rss = data_list[6]
+
+                        self.CPU = data_list[2].replace('%', '')
+                        self.vss = data_list[5].replace('K', '')
+                        self.rss = data_list[6].replace('K', '')
+
                         self.name = data_list[9]
                         print(self.rss)
                     else:
